@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Analysis Stage ') {
       steps {
-        echo "LGV - Analysing project ${JOB_BASE_NAME} "
+        echo "LGV - Analysing project ${JOB_BASE_NAME} ${projectName}"
         script {
 					withCredentials([usernamePassword(credentialsId: '03578a00-2bed-4e5d-970c-35cf49d9d3ba', 
 					passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
