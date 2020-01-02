@@ -11,7 +11,18 @@ pipeline {
     stage('Analysis Stage ') {
       steps {
         echo "LGV - Analysing project ${JOB_BASE_NAME} ${jobconsolename}"
+        switch(${JOB_BASE_NAME}) {
+                   case "lgv-branch":
+                   	echo "LGV UNOOO"
+                   	break
+                   default:
+                   	echo "LGV DEFAULT"
+                   	break
+               }
+
+        
         script {
+        
 					withCredentials([usernamePassword(credentialsId: '03578a00-2bed-4e5d-970c-35cf49d9d3ba', 
 					passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
 					def returnCode = bat(script: "C:/LGV/kla_kw/KiuwanLocalAnalyzer/KiuwanLocalAnalyzer/bin/agentkk.cmd -c -s \"${WORKSPACE}\" -n \"${JOB_BASE_NAME}\" -l ${BUILD_NUMBER} -wr --user \"$USERNAME\" --pass \"$PASSWORD\"", returnStatus: true) 
