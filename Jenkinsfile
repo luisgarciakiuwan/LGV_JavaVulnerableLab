@@ -6,10 +6,5 @@ pipeline {
         echo 'LGV - Building project '
       }
     }
-    stage('Analysis Stage') {
-      steps {
-        echo 'LGV - Analyzing'
-      }
-    }
   }
 }
