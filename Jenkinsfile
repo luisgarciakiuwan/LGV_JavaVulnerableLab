@@ -11,14 +11,18 @@ pipeline {
     stage('Analysis Stage ') {
       steps {
         echo "LGV - Analysing project ${JOB_BASE_NAME} ${jobconsolename}"
-        switch(${JOB_BASE_NAME}) {
+        script {
+           switch(${JOB_BASE_NAME}) {
                    case "lgv-branch":
                    	echo "LGV UNOOO"
                    	break
                    default:
                    	echo "LGV DEFAULT"
                    	break
-               }
+               } 
+        }
+
+        
 
         
         script {
