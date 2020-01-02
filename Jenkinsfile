@@ -1,3 +1,5 @@
+def jobnameparts = JOB_NAME.tokenize('/') as String[]
+def jobconsolename = jobnameparts[0]
 pipeline {
   agent any
   stages {
@@ -8,7 +10,7 @@ pipeline {
     }
     stage('Analysis Stage ') {
       steps {
-        echo "LGV - Analysing project ${JOB_BASE_NAME} ${currentBuild.rawBuild.project.parent.displayName}"
+        echo "LGV - Analysing project ${JOB_BASE_NAME} ${jobconsolename}"
         script {
 					withCredentials([usernamePassword(credentialsId: '03578a00-2bed-4e5d-970c-35cf49d9d3ba', 
 					passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
