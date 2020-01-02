@@ -12,7 +12,8 @@ pipeline {
       steps {
         echo "LGV - Analysing project ${JOB_BASE_NAME} ${jobconsolename}"
         script {
-           switch(${JOB_BASE_NAME}) {
+           def pp = JOB_BASE_NAME
+           switch(pp) {
                    case "lgv-branch":
                    	echo "LGV UNOOO"
                    	break
