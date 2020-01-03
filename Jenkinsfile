@@ -15,7 +15,7 @@ pipeline {
            def branch_name = JOB_BASE_NAME
            def app_name = jobconsolename
            echo "LGV - branch_name [ ${JOB_BASE_NAME} ] app_name [ ${jobconsolename} ]"
-           branch_name = "master"
+           
            switch(branch_name) {
                    case "lgv-branch":
                    	echo "In the dev branch we whould execute a delivery anlysis"
