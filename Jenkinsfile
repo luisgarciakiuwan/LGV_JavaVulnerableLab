@@ -35,6 +35,11 @@ pipeline {
 					echo " ---------------"
 					echo " [ ${result} ] "
 					echo " ---------------"
+					idx = result.indexOf( "Analysis results URL:" )
+					audit_url = result.substring( idx+21, idx+21+100)
+					echo " ---------------"
+					echo " [ ${audit_url} ] "
+					echo " ---------------"
                    	break
                    default:
                    	echo "In the master branch we whould exec a baseline"
