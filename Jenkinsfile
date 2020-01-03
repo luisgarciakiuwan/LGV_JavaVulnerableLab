@@ -15,9 +15,9 @@ pipeline {
            def branch_name = JOB_BASE_NAME
            def app_name = jobconsolename
            echo "LGV - branch_name [ ${JOB_BASE_NAME} ] app_name [ ${jobconsolename} ]"
-           switch(pp) {
+           switch(branch_name) {
                    case "lgv-branch":
-                   	echo "In the dev brach we whould execute a delivery anlysis"
+                   	echo "In the dev branch we whould execute a delivery anlysis"
                    	withCredentials([usernamePassword(credentialsId: '79d08bad-643a-43a9-a662-537b8710cfcb', 
 					passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
 					def returnCode = bat(script: "C:/LGV/kla_kw/KiuwanLocalAnalyzer/KiuwanLocalAnalyzer/bin/agentpp.cmd DELIVERY -c -s \"${WORKSPACE}\" -n \"${JOB_BASE_NAME}\" -l ${BUILD_NUMBER} -wr --user \"$USERNAME\" --pass \"$PASSWORD\"", returnStatus: true) 
@@ -33,7 +33,20 @@ pipeline {
 					}
                    	break
                    default:
-                   	echo "In the master brachm we whould exec a baseline"
+                   	echo "In the master branch we whould exec a baseline"
+                   	withCredentials([usernamePassword(credentialsId: '79d08bad-643a-43a9-a662-537b8710cfcb', 
+					passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+					def returnCode = bat(script: "C:/LGV/kla_kw/KiuwanLocalAnalyzer/KiuwanLocalAnalyzer/bin/agentpp.cmd DELIVERY -c -s \"${WORKSPACE}\" -n \"${JOB_BASE_NAME}\" -l ${BUILD_NUMBER} -wr --user \"$USERNAME\" --pass \"$PASSWORD\"", returnStatus: true) 
+						switch(returnCode){
+								case 0:
+									break
+								case 14:
+									currentBuild.result = 'UNSTABLE'
+									break
+								default:
+									currentBuild.result = 'NOT_BUILT'
+						}
+					}
                    	break
                } 
         }
