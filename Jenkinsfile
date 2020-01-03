@@ -22,13 +22,13 @@ pipeline {
 					passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
 					def returnCode = bat(script: "C:/LGV/kla_kw/KiuwanLocalAnalyzer/KiuwanLocalAnalyzer/bin/agent.cmd  -s \"${WORKSPACE}\" -n \"${app_name}\" -as completeDelivery -cr MyCr -bn \"${branch_name}\" -l ${BUILD_NUMBER} -wr --user \"$USERNAME\" --pass \"$PASSWORD\"", returnStatus: true) 
 						switch(returnCode){
-								case 0:
+								case 0: // sucessfull
 									break
-								case 14:
-									currentBuild.result = 'UNSTABLE'
+								case 10: // audit fail
+									currentBuild.result = 'ABORTED'
 									break
 								default:
-									currentBuild.result = 'NOT_BUILT'
+									currentBuild.result = 'FAILURE'
 						}
 					}
                    	break
@@ -51,23 +51,6 @@ pipeline {
                } 
         }
 
-           
-        script {
-        
-					withCredentials([usernamePassword(credentialsId: '03578a00-2bed-4e5d-970c-35cf49d9d3ba', 
-					passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-					def returnCode = bat(script: "C:/LGV/kla_kw/KiuwanLocalAnalyzer/KiuwanLocalAnalyzer/bin/agentkk.cmd -c -s \"${WORKSPACE}\" -n \"${JOB_BASE_NAME}\" -l ${BUILD_NUMBER} -wr --user \"$USERNAME\" --pass \"$PASSWORD\"", returnStatus: true) 
-						switch(returnCode){
-								case 0:
-									break
-								case 14:
-									currentBuild.result = 'UNSTABLE'
-									break
-								default:
-									currentBuild.result = 'NOT_BUILT'
-						}
-					}
-				}
       }
     }
   }
