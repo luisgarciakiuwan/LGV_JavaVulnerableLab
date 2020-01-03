@@ -15,6 +15,7 @@ pipeline {
            def branch_name = JOB_BASE_NAME
            def app_name = jobconsolename
            echo "LGV - branch_name [ ${JOB_BASE_NAME} ] app_name [ ${jobconsolename} ]"
+           branch_name = "master"
            switch(branch_name) {
                    case "lgv-branch":
                    	echo "In the dev branch we whould execute a delivery anlysis"
@@ -25,35 +26,34 @@ pipeline {
 								case 0: // sucessfull
 									break
 								case 10: // audit fail
+									result = readFile('salida.txt').trim()
+									echo " ---------------"
+									echo " [ ${result} ] "
+									echo " ---------------"
+									idx = result.indexOf( "Analysis results URL:" )
+									audit_url = result.substring( idx+21, idx+21+100)
+									echo " ---------------"
+									echo " [ ${audit_url} ] "
+									echo " ---------------"
 									currentBuild.result = 'ABORTED'
 									break
 								default:
 									currentBuild.result = 'FAILURE'
 						}
 					}
-					result = readFile('salida.txt').trim()
-					echo " ---------------"
-					echo " [ ${result} ] "
-					echo " ---------------"
-					idx = result.indexOf( "Analysis results URL:" )
-					audit_url = result.substring( idx+21, idx+21+100)
-					echo " ---------------"
-					echo " [ ${audit_url} ] "
-					echo " ---------------"
+					
                    	break
+                   	
                    default:
                    	echo "In the master branch we whould exec a baseline"
                    	withCredentials([usernamePassword(credentialsId: '79d08bad-643a-43a9-a662-537b8710cfcb', 
 					passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-					def returnCode = bat(script: "C:/LGV/kla_kw/KiuwanLocalAnalyzer/KiuwanLocalAnalyzer/bin/agentpp.cmd DELIVERY -c -s \"${WORKSPACE}\" -n \"${JOB_BASE_NAME}\" -l ${BUILD_NUMBER} -wr --user \"$USERNAME\" --pass \"$PASSWORD\"", returnStatus: true) 
+					def returnCode = bat(script: "C:/LGV/kla_kw/KiuwanLocalAnalyzer/KiuwanLocalAnalyzer/bin/agentpp.cmd -c -s \"${WORKSPACE}\" -n \"${app_name}\" -l ${BUILD_NUMBER} -wr --user \"$USERNAME\" --pass \"$PASSWORD\"", returnStatus: true) 
 						switch(returnCode){
-								case 0:
-									break
-								case 14:
-									currentBuild.result = 'UNSTABLE'
+								case 0: // sucessfull
 									break
 								default:
-									currentBuild.result = 'NOT_BUILT'
+									currentBuild.result = 'FAILURE'
 						}
 					}
                    	break
