@@ -48,7 +48,7 @@ pipeline {
                    	echo "In the master branch we whould exec a baseline"
                    	withCredentials([usernamePassword(credentialsId: '79d08bad-643a-43a9-a662-537b8710cfcb', 
 					passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-					def returnCode = bat(script: "C:/LGV/kla_kw/KiuwanLocalAnalyzer/KiuwanLocalAnalyzer/bin/agentpp.cmd -c -s \"${WORKSPACE}\" -n \"${app_name}\" -l ${BUILD_NUMBER} -wr --user \"$USERNAME\" --pass \"$PASSWORD\"", returnStatus: true) 
+					def returnCode = bat(script: "C:/LGV/kla_kw/KiuwanLocalAnalyzer/KiuwanLocalAnalyzer/bin/agent.cmd -c -s \"${WORKSPACE}\" -n \"${app_name}\" -l ${BUILD_NUMBER} -wr --user \"$USERNAME\" --pass \"$PASSWORD\"", returnStatus: true) 
 						switch(returnCode){
 								case 0: // sucessfull
 									break
