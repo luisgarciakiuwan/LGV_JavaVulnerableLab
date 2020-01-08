@@ -42,16 +42,17 @@ public class xxe extends HttpServlet {
         try
         {
           InputStream xml=request.getInputStream();
-          DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+          DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();  
           DocumentBuilder builder = factory.newDocumentBuilder();
           InputSource is = new InputSource(xml); 	
           Document doc = builder.parse(is);
           Element element = doc.getDocumentElement();
           NodeList nodes = element.getChildNodes();
-          out.print("<br/>Result:<br/>");
+          out.print("<br/>Resultx:<br/>");
           out.print("---------------------<br/>");
           for (int i = 0; i < nodes.getLength(); i++) {
-            out.print(nodes.item(i).getNodeName()+" : " + nodes.item(i).getFirstChild().getNodeValue().toString());
+            //out.print(nodes.item(i).getNodeName()+" : " + nodes.item(i).getFirstChild().getNodeValue().toString());
+        	out.print(nodes.item(i).getNodeName()+" : " + nodes.item(i).getTextContent());
             out.print("<br/>");
          }
         }
