@@ -45,11 +45,11 @@ public class xxe extends HttpServlet {
           DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
           //
           // Neutralization of XMLi
-          // factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-          // factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
-          // factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
-          // factory.setXIncludeAware(false);
-          // factory.setExpandEntityReferences(false);
+           factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+           factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+           factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+           factory.setXIncludeAware(false);
+           factory.setExpandEntityReferences(false);
           // End of neutralization
           DocumentBuilder builder = factory.newDocumentBuilder();
           InputSource is = new InputSource(xml); 	
