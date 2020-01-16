@@ -14,7 +14,7 @@ private static Object getJson(String path) {
 	return new JsonSlurper().parse(myURLConnection.inputStream)
 }
 
-static AuditResults getAuditResult(String project, String changeRequest, String deliveryLabel) {
+static int getAuditResult(String project, String changeRequest, String deliveryLabel) {
 	try {
 	def json = getJson("$API_SERVER/apps/" + java.net.URLEncoder.encode(project,"UTF-8") + "/deliveries?changeRequest=" + java.net.URLEncoder.encode(changeRequest,"UTF-8") + "&label=" + java.net.URLEncoder.encode(deliveryLabel, "UTF-8"))
 
@@ -22,11 +22,15 @@ static AuditResults getAuditResult(String project, String changeRequest, String 
 	println( json.auditResult.overallResult )
 	println( json.auditResultURL )
 	println( json )
+	return 0
 	} catch (e) {
 	//Connection error
 	System.err.println "Connection to Kiuwan cannot be established to get delivery information: " + e.getMessage()
 	e.printStackTrace()
+	return 1
 	}
+	
+	return 0
 }
 
 
