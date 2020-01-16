@@ -25,7 +25,7 @@ static String getAuditResult(String project, String changeRequest, String delive
 	//println( json.auditResult.overallResult )
 	//println( json.auditResultURL )
 	//println( json )
-	return json.auditResult.overallResult
+	return json.auditResultURL
 	} catch (e) {
 	//Connection error
 	//System.err.println "Connection to Kiuwan cannot be established to get delivery information: " + e.getMessage()
