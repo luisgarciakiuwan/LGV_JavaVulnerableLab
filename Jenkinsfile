@@ -6,6 +6,7 @@ private static Object getJson(String path) {
 	String base = "https://api.kiuwan.com/apps/JavaVulnerableLab/deliveries"
 	String apiString =base + token
 
+	URL apiUrl = new URL(apiString)
 	HttpURLConnection myURLConnection = (HttpURLConnection)apiUrl.openConnection();
 	String cred="lgv.appsec:password.0";
 	String authStr = Base64.getEncoder().encodeToString( cred.getBytes());
