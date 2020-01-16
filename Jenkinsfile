@@ -15,6 +15,9 @@ private static Object getJson(String path) {
 }
 
 static int getAuditResult(String project, String changeRequest, String deliveryLabel) {
+    println( "project: [" + project + "]")
+    println( "changeRequest: [" + changeRequest + "]")
+    println( "deliveryLabel: [" + deliveryLabel + "]")
 	try {
 	def json = getJson("https://api.kiuwan.com/apps/" + java.net.URLEncoder.encode(project,"UTF-8") + "/deliveries?changeRequest=" + java.net.URLEncoder.encode(changeRequest,"UTF-8") + "&label=" + java.net.URLEncoder.encode(deliveryLabel, "UTF-8"))
 
@@ -25,8 +28,8 @@ static int getAuditResult(String project, String changeRequest, String deliveryL
 	return 0
 	} catch (e) {
 	//Connection error
-	System.err.println "Connection to Kiuwan cannot be established to get delivery information: " + e.getMessage()
-	e.printStackTrace()
+	//System.err.println "Connection to Kiuwan cannot be established to get delivery information: " + e.getMessage()
+	//e.printStackTrace()
 	return 1
 	}
 	
@@ -53,7 +56,7 @@ pipeline {
            switch(branch_name) {
                    case "lgv-branch":
                    	echo "In the dev branch we whould execute a delivery anlysis"
-                   	getAuditResult(String project, String changeRequest, String deliveryLabel)
+                   	getAuditResult( ${app_name}, "MyCr", ${BUILD_NUMBER} )
                    	echo "hasta luego lucas"
                    	
                    	withCredentials([usernamePassword(credentialsId: 'c413cf58-94b6-488e-a0aa-cac2f3d5badc', 
