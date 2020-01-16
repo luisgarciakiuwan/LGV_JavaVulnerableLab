@@ -16,7 +16,7 @@ private static Object getJson(String path) {
 
 static int getAuditResult(String project, String changeRequest, String deliveryLabel) {
 	try {
-	def json = getJson("$API_SERVER/apps/" + java.net.URLEncoder.encode(project,"UTF-8") + "/deliveries?changeRequest=" + java.net.URLEncoder.encode(changeRequest,"UTF-8") + "&label=" + java.net.URLEncoder.encode(deliveryLabel, "UTF-8"))
+	def json = getJson("https://api.kiuwan.com/apps/" + java.net.URLEncoder.encode(project,"UTF-8") + "/deliveries?changeRequest=" + java.net.URLEncoder.encode(changeRequest,"UTF-8") + "&label=" + java.net.URLEncoder.encode(deliveryLabel, "UTF-8"))
 
 	println( "------" )
 	println( json.auditResult.overallResult )
