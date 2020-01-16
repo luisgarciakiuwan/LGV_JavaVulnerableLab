@@ -53,6 +53,9 @@ pipeline {
            switch(branch_name) {
                    case "lgv-branch":
                    	echo "In the dev branch we whould execute a delivery anlysis"
+                   	getAuditResult(String project, String changeRequest, String deliveryLabel)
+                   	echo "hasta luego lucas"
+                   	
                    	withCredentials([usernamePassword(credentialsId: 'c413cf58-94b6-488e-a0aa-cac2f3d5badc', 
 					passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
 					def returnCode = bat(script: "C:/LGV/kla_kw/KiuwanLocalAnalyzer/KiuwanLocalAnalyzer/bin/agent.cmd  -s \"${WORKSPACE}\" -n \"${app_name}\" -as completeDelivery -cr MyCr -bn \"${branch_name}\" -l ${BUILD_NUMBER} -wr --user \"$USERNAME\" --pass \"$PASSWORD\" > salida.txt", returnStatus: true) 
