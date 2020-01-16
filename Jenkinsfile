@@ -56,7 +56,7 @@ pipeline {
            switch(branch_name) {
                    case "lgv-branch":
                    	echo "In the dev branch we whould execute a delivery anlysis"
-                   	getAuditResult( ${app_name}, "MyCr", ${BUILD_NUMBER} )
+                   	getAuditResult( "${app_name}", "MyCr", "${BUILD_NUMBER}" )
                    	echo "hasta luego lucas"
                    	
                    	withCredentials([usernamePassword(credentialsId: 'c413cf58-94b6-488e-a0aa-cac2f3d5badc', 
