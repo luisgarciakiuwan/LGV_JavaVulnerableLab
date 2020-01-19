@@ -59,7 +59,7 @@ pipeline {
                    	def res = getAuditResult( "${app_name}", "MyCr", "${BUILD_NUMBER}" )
                    	echo "hasta luego lucas - ${res} "
                    	
-                   	withCredentials([usernamePassword(credentialsId: 'c413cf58-94b6-488e-a0aa-cac2f3d5badc', 
+                   	withCredentials([usernamePassword(credentialsId: '79d08bad-643a-43a9-a662-537b8710cfcb', 
 					passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
 					def returnCode = bat(script: "C:/LGV/kla_kw/KiuwanLocalAnalyzer/KiuwanLocalAnalyzer/bin/agent.cmd  -s \"${WORKSPACE}\" -n \"${app_name}\" -as completeDelivery -cr MyCr -bn \"${branch_name}\" -l ${BUILD_NUMBER} -wr --user \"$USERNAME\" --pass \"$PASSWORD\" > salida.txt", returnStatus: true) 
 						switch(returnCode){
