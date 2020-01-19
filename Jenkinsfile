@@ -4,7 +4,8 @@ def jobconsolename = jobnameparts[0]
 private static Object getJson(String path) {
 	String token = "?changeRequest=MyCr&label=41"
 	String base = "https://api.kiuwan.com/apps/JavaVulnerableLab/deliveries"
-	String apiString =base + token
+	//String apiString =base + token
+	String apiString = path
 
 	URL apiUrl = new URL(apiString)
 	HttpURLConnection myURLConnection = (HttpURLConnection)apiUrl.openConnection();
