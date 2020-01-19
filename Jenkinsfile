@@ -1,10 +1,8 @@
 import groovy.json.JsonSlurper
 def jobnameparts = JOB_NAME.tokenize('/') as String[]
 def jobconsolename = jobnameparts[0]
+
 private static Object getJson(String path) {
-	String token = "?changeRequest=MyCr&label=41"
-	String base = "https://api.kiuwan.com/apps/JavaVulnerableLab/deliveries"
-	//String apiString =base + token
 	String apiString = path
 
 	URL apiUrl = new URL(apiString)
@@ -16,21 +14,18 @@ private static Object getJson(String path) {
 }
 
 static String getAuditResult(String project, String changeRequest, String deliveryLabel) {
-    println( "project: [" + project + "]")
-    println( "changeRequest: [" + changeRequest + "]")
-    println( "deliveryLabel: [" + deliveryLabel + "]")
-	try {
-	def json = getJson("https://api.kiuwan.com/apps/" + java.net.URLEncoder.encode(project,"UTF-8") + "/deliveries?changeRequest=" + java.net.URLEncoder.encode(changeRequest,"UTF-8") + "&label=" + java.net.URLEncoder.encode(deliveryLabel, "UTF-8"))
+    try {
+		def json = getJson("https://api.kiuwan.com/apps/" + java.net.URLEncoder.encode(project,"UTF-8") + "/deliveries?changeRequest=" + java.net.URLEncoder.encode(changeRequest,"UTF-8") + "&label=" + java.net.URLEncoder.encode(deliveryLabel, "UTF-8"))
 
-	//println( "------" )
-	//println( json.auditResult.overallResult )
-	//println( json.auditResultURL )
-	//println( json )
-	return json.auditResultURL
+		//println( "------" )
+		//println( json.auditResult.overallResult )
+		//println( json.auditResultURL )
+		//println( json )
+		return json.auditResultURL
 	} catch (e) {
-	//Connection error
-	//System.err.println "Connection to Kiuwan cannot be established to get delivery information: " + e.getMessage()
-	//e.printStackTrace()
+		//Connection error
+		//System.err.println "Connection to Kiuwan cannot be established to get delivery information: " + e.getMessage()
+		//e.printStackTrace()
 	return "Error 1"
 	}
 	
@@ -58,7 +53,6 @@ pipeline {
                    case "lgv-branch":
                    	echo "In the dev branch we whould execute a delivery anlysis"
                    	
-                   	
                    	withCredentials([usernamePassword(credentialsId: '79d08bad-643a-43a9-a662-537b8710cfcb', 
 					passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
 					def returnCode = bat(script: "C:/LGV/kla_kw/KiuwanLocalAnalyzer/KiuwanLocalAnalyzer/bin/agent.cmd  -s \"${WORKSPACE}\" -n \"${app_name}\" -as completeDelivery -cr MyCr -bn \"${branch_name}\" -l ${BUILD_NUMBER} -wr --user \"$USERNAME\" --pass \"$PASSWORD\" > salida.txt", returnStatus: true) 
@@ -83,7 +77,7 @@ pipeline {
 					}
 					
 					def res = getAuditResult( "${app_name}", "MyCr", "${BUILD_NUMBER}" )
-                   	echo "hasta luego lucas - ${res} "
+                   	echo "URL Resultado de la Auditoria - ${res} "
 					
                    	break
                    	
