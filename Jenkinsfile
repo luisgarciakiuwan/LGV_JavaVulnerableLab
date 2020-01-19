@@ -15,9 +15,9 @@ private static Object getJson(String path) {
 }
 
 static String getAuditResult(String project, String changeRequest, String deliveryLabel) {
-    //println( "project: [" + project + "]")
-    //println( "changeRequest: [" + changeRequest + "]")
-    //println( "deliveryLabel: [" + deliveryLabel + "]")
+    println( "project: [" + project + "]")
+    println( "changeRequest: [" + changeRequest + "]")
+    println( "deliveryLabel: [" + deliveryLabel + "]")
 	try {
 	def json = getJson("https://api.kiuwan.com/apps/" + java.net.URLEncoder.encode(project,"UTF-8") + "/deliveries?changeRequest=" + java.net.URLEncoder.encode(changeRequest,"UTF-8") + "&label=" + java.net.URLEncoder.encode(deliveryLabel, "UTF-8"))
 
@@ -56,8 +56,7 @@ pipeline {
            switch(branch_name) {
                    case "lgv-branch":
                    	echo "In the dev branch we whould execute a delivery anlysis"
-                   	def res = getAuditResult( "${app_name}", "MyCr", "${BUILD_NUMBER}" )
-                   	echo "hasta luego lucas - ${res} "
+                   	
                    	
                    	withCredentials([usernamePassword(credentialsId: '79d08bad-643a-43a9-a662-537b8710cfcb', 
 					passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
@@ -81,6 +80,9 @@ pipeline {
 									currentBuild.result = 'FAILURE'
 						}
 					}
+					
+					def res = getAuditResult( "${app_name}", "MyCr", "${BUILD_NUMBER}" )
+                   	echo "hasta luego lucas - ${res} "
 					
                    	break
                    	
