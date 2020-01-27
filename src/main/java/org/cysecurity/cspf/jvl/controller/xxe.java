@@ -50,7 +50,7 @@ public class xxe extends HttpServlet {
            factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
            factory.setXIncludeAware(false);
            factory.setExpandEntityReferences(false);
-           End of neutralization
+          // End of neutralization
           DocumentBuilder builder = factory.newDocumentBuilder();
           InputSource is = new InputSource(xml); 	
           Document doc = builder.parse(is);
